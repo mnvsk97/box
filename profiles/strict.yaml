@@ -1,0 +1,7 @@
+name: strict
+filesystem: readonly
+network: none
+memory: 256M
+pids: 64
+syscalls: strict
+capabilities: []

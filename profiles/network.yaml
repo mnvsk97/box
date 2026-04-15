@@ -1,0 +1,7 @@
+name: network
+filesystem: readwrite
+network: host
+memory: 512M
+pids: 256
+syscalls: moderate
+capabilities: []
