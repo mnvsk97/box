@@ -15,7 +15,6 @@ class SandboxState:
     id: str
     pid: str  # Docker container ID
     image: str
-    profile: str
     status: str  # "running", "stopped", "dead"
     created_at: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
     config: dict = field(default_factory=dict)

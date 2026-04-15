@@ -95,7 +95,6 @@ class Box:
         image: str = "alpine",
         *,
         name: str | None = None,
-        profile: str = "default",
         memory: str = "512M",
         pids: int = 256,
         cpu: str | None = None,
@@ -112,7 +111,6 @@ class Box:
         self.id = secrets.token_hex(4)
         self.name = name
         self.image = resolve_image(image)
-        self.profile = profile
         self.status = "running"
         self._fs = FileSystem(self.id)
         self._timeout_timer: threading.Timer | None = None
@@ -141,7 +139,6 @@ class Box:
             id=self.id,
             pid=self._container_id,
             image=self.image,
-            profile=self.profile,
             status="running",
             config=self._config,
             name=name,
@@ -267,7 +264,6 @@ class Box:
             box.id = state.id
             box.name = state.name
             box.image = state.image
-            box.profile = state.profile
             box.status = state.status
             box._container_id = state.pid
             box._config = state.config
@@ -304,7 +300,6 @@ class Box:
         box.id = state.id
         box.name = state.name
         box.image = state.image
-        box.profile = state.profile
         box.status = state.status
         box._container_id = state.pid
         box._config = state.config

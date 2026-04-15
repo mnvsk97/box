@@ -3,7 +3,6 @@
 Run with: pytest tests/test_integration.py -v
 """
 
-import shutil
 import subprocess
 
 import pytest

@@ -57,7 +57,6 @@ def _parse_ports(port_list: tuple[str, ...]) -> dict[int, int]:
 @main.command()
 @click.argument("image")
 @click.option("--name", "-n", default=None, help="Name for the sandbox")
-@click.option("--profile", "-p", default="default", help="Security profile")
 @click.option("--memory", "-m", default="512M", help="Memory limit")
 @click.option("--pids", default=256, type=int, help="Max PID count")
 @click.option("--no-network", is_flag=True, help="Disable network access")
@@ -66,13 +65,12 @@ def _parse_ports(port_list: tuple[str, ...]) -> dict[int, int]:
 @click.option("--port", "ports", multiple=True, help="Map port (HOST:CONTAINER or CONTAINER)")
 @click.option("--timeout", "-t", type=int, default=None, help="Auto-destroy after N seconds")
 @click.option("-w", "--workdir", default=None, help="Working directory inside sandbox")
-def up(image, name, profile, memory, pids, no_network, envs, volumes, ports, timeout, workdir):
+def up(image, name, memory, pids, no_network, envs, volumes, ports, timeout, workdir):
     """Create a sandbox and print its ID."""
     try:
         sb = Box(
             image,
             name=name,
-            profile=profile,
             memory=memory,
             pids=pids,
             network=not no_network,
@@ -91,18 +89,16 @@ def up(image, name, profile, memory, pids, no_network, envs, volumes, ports, tim
 @main.command()
 @click.argument("image")
 @click.argument("command", nargs=-1, required=True)
-@click.option("--profile", "-p", default="default")
 @click.option("--memory", "-m", default="512M")
 @click.option("--no-network", is_flag=True)
 @click.option("-e", "--env", "envs", multiple=True, help="Set env var (KEY=VALUE)")
 @click.option("-v", "--volume", "volumes", multiple=True, help="Mount volume (HOST:CONTAINER)")
 @click.option("-w", "--workdir", default=None, help="Working directory inside sandbox")
-def run(image, command, profile, memory, no_network, envs, volumes, workdir):
+def run(image, command, memory, no_network, envs, volumes, workdir):
     """One-shot: create sandbox, run command, destroy."""
     try:
         with Box(
             image,
-            profile=profile,
             memory=memory,
             network=not no_network,
             envs=_parse_envs(envs),
